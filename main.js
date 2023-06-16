@@ -1,43 +1,70 @@
+var SpeechRecognition = window.webkitSpeechRecognition;
+  
+var recognition = new SpeechRecognition();
 
+var Textbox = document.getElementById("textbox"); 
+
+function start()
+{
+    Textbox.innerHTML = ""; 
+    recognition.start();
+} 
+ 
+recognition.onresult = function(event) {
+
+ console.log(event); 
+
+var Content = event.results[0][0].transcript;
+
+    Textbox.innerHTML = Content;
+    console.log(Content);
+      if(Content =="tire minha selfie")
+      {
+        console.log("tirando selfie --- ");
+        speak();
+      }
+}
+
+
+function speak(){
+    var synth = window.speechSynthesis;
+
+    speakData = "Tirando sua selfie em 5 segundos";
+
+    var utterThis = new SpeechSynthesisUtterance(speakData);
+
+    synth.speak(utterThis);
+
+    Webcam.attach(camera);
+
+    setTimeout(function()
+    { 
+        takeSelfie(); 
+        save();
+    }, 5000);
+}
+
+ 
+camera = document.getElementById("camera");
 Webcam.set({
-    width:350,
-    height:300,
-    image_format : 'png',
-    png_quality:90
+    width:360,
+    height:250,
+    image_format : 'jpeg',
+    jpeg_quality:90
 });
 
-camera = document.getElementById("camera");
-
-Webcam.attach( '#camera' );
-
-
-function takeSnapshot()
+function takeSelfie()
 {
     Webcam.snap(function(data_uri) {
-        document.getElementById("result").innerHTML = '<img id="captured_image>" src="'+data_uri+'"/>';
+        document.getElementById("result").innerHTML = '<img id="selfieImage" src="'+data_uri+'"/>';
     });
 }
 
-console.log('ml5 version:',ml5.version);
 
-classifier = ml5.imageClassifier('https://storage.googleapis.com/tm-model/dhqOhdXJD/model.json',modelLoaded);
-
-function modelLoaded() {
-    console.log('Model Loaded!');
-}
-
-function check()
+function save()
 {
-    img = document.getElementById('captured_image');
-    classifier.classify(img, gotResult)
-}
-
-function gotResult(error, results) {
-    if(error) {
-        console.error(error);
-    } else {
-        console.log(results);
-        document.getElementById("resultObjectName").innerHTML0 = results[0].label;
-        document.getElementById("resultObjectAccuracy").innerHTML0 = results[0].label;
-    }
+  link = document.getElementById("link");
+  image = document.getElementById("selfieImage").src ;
+  link.href = image;
+  link.click();
 }

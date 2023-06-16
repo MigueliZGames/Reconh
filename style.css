@@ -1,20 +1,21 @@
-body
+#start-btn
 {
-    color: white;
-    background: pink;
-}
-.heading
-{
-    width: 80%;
-    font-size: 22px;
+  width: 40%;
 }
 #camera
 {
-    border: 2px dashed black;
-    width: 350px;
-    height: 300px;
+  width: 360px;
+  height: 250px;
+  border:1px solid rgb(0, 4, 250);
 }
-.nameOfObjects, #resultObjectName  , #resultObjectAccuracy
+#logo_img
 {
-    color: yellow;
+  width: 150px;
+  border-radius: 30px;
 }
+#textbox
+{
+  width: 300px;
+}
+
+
